@@ -10,6 +10,10 @@ public class PlayerAttack : MonoBehaviour
     private float timeToAttack = 0.4f;
     private float timer = 0.1f;
 
+    private float delay = 0.1f;
+
+    private float delayTimer = 0.1f;
+
     [SerializeField] Animator _animator;
 
 
@@ -44,9 +48,9 @@ public class PlayerAttack : MonoBehaviour
 
     private void Attack()
     {
-        attacking = true;
-        attackArea.SetActive(attacking);
         _animator.SetTrigger("Attack");
+        attacking = true;
+        attackArea.SetActive(attacking);   
     }
 
     private void AttackDirection()
