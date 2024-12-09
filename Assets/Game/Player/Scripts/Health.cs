@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -27,6 +28,7 @@ public class Health : MonoBehaviour
         }
 
         this.health -= amount;
+        StartCoroutine(VisualIndicator(Color.red));
 
         if(health <=0)
         {
@@ -43,6 +45,7 @@ public class Health : MonoBehaviour
         }
 
         bool Overheal = health + amount > Max_Health;
+        StartCoroutine(VisualIndicator(Color.green));
 
         if(Overheal)
         {
@@ -64,5 +67,12 @@ public class Health : MonoBehaviour
     {
         this.Max_Health=maxHealth;
         this.health = health;
+    }
+
+    private IEnumerator VisualIndicator(Color color)
+    {
+        GetComponent<SpriteRenderer>().color = color;
+        yield return new WaitForSeconds(0.1f);
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
 }
