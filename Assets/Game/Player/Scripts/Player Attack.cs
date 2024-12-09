@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -6,8 +7,8 @@ public class PlayerAttack : MonoBehaviour
 
     private bool attacking = false;
 
-    private float timeToAttack = 0.25f;
-    private float timer = 0f;
+    private float timeToAttack = 0.4f;
+    private float timer = 0.1f;
 
     [SerializeField] Animator _animator;
 
@@ -21,6 +22,8 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        AttackDirection();
+
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
             Attack();
@@ -32,7 +35,7 @@ public class PlayerAttack : MonoBehaviour
 
             if(timer >= timeToAttack)
             {
-                timer = 0f;
+                timer = 0.1f;
                 attacking = false;
                 attackArea.SetActive(attacking);
             }
@@ -44,5 +47,19 @@ public class PlayerAttack : MonoBehaviour
         attacking = true;
         attackArea.SetActive(attacking);
         _animator.SetTrigger("Attack");
+    }
+
+    private void AttackDirection()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        Vector3 PlayerScreenPoint = Camera.main.WorldToScreenPoint(transform.position);
+        if(mousePos.x < PlayerScreenPoint.x)
+        {
+            attackArea.transform.rotation = Quaternion.Euler(0,180,0);
+        }
+        else
+        {
+            attackArea.transform.rotation = Quaternion.Euler(0,0,0);
+        }
     }
 }

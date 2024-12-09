@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 [SelectionBase]
 public class PlayerController : MonoBehaviour
@@ -8,13 +9,14 @@ public class PlayerController : MonoBehaviour
 
     #region Editor Data
     [Header("Movement Attributes")]
-    [SerializeField] float _moveSpeed = 50f;
+    [SerializeField]float _moveSpeed = 120f;
 
     [Header("Dependencies")]
     [SerializeField] Rigidbody2D _rb;
     [SerializeField] Animator _animator;
     [SerializeField] SpriteRenderer _spriteRenderer;
     #endregion
+
 
     #region Internal Data
     private Vector2 _moveDir = Vector2.zero;
@@ -46,7 +48,7 @@ public class PlayerController : MonoBehaviour
     #region Movement Logic
     private void MovementUpdate()
     {
-        _rb.linearVelocity = _moveDir.normalized * _moveSpeed * Time.fixedDeltaTime;
+        _rb.linearVelocity= _moveDir.normalized * _moveSpeed * Time.fixedDeltaTime;  
     }
     #endregion
 
