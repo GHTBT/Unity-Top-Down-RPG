@@ -1,11 +1,14 @@
 using System.Collections;
 using UnityEngine;
-
+using System;
 public class Health : MonoBehaviour
 {
     [SerializeField] private int health = 20;
 
     private int Max_Health = 100;
+
+    public static Action OnPlayerDeath;
+    public static Action OnEnemyDeath;
 
     void Update()
     {
@@ -57,12 +60,6 @@ public class Health : MonoBehaviour
         }       
     }
 
-    public void Death()
-    {
-        Debug.Log("Died");
-        Destroy(gameObject);
-    }
-
     public void SetHealth(int maxHealth, int health)
     {
         this.Max_Health=maxHealth;
@@ -74,5 +71,20 @@ public class Health : MonoBehaviour
         GetComponent<SpriteRenderer>().color = color;
         yield return new WaitForSeconds(0.1f);
         GetComponent<SpriteRenderer>().color = Color.white;
+    }
+    public void Death()
+    {
+        Debug.Log("Died");
+        Destroy(gameObject);
+
+        if(this.CompareTag("Player"))
+        {
+            Time.timeScale = 0;
+            OnPlayerDeath?.Invoke();
+        }
+        else
+        {
+            OnEnemyDeath?.Invoke();
+        }
     }
 }
